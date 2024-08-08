@@ -1,0 +1,23 @@
+name = "online-radio"
+workers_dev = true
+main = "src/index.js"
+compatibility_date = "2024-07-22"
+
+[ai]
+binding = "AI"
+
+account_id = "32bc3644f363d10b33accb6b2bd7547b"
+workers_dev = true
+
+[[d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "karaokedb"
+database_id = "e4e9f4e5-d2b0-4896-beab-0daf7278e5d9"
+
+[[kv_namespaces]]
+binding = "MY_KV"
+id = "de9d0154ca8f4ac5a9e8f3c7be145328"
+
+[vars]
+CLOUDFLARE_API_KEY = "PwfJor56sIf_CrWSk09eOT3Np9fla4xU8WSrWYrz"
+CLOUDFLARE_ACCOUNT_ID = "32bc3644f363d10b33accb6b2bd7547b"

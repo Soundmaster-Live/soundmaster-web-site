@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundmaster - Your Ultimate Online Radio Station</title>
+  <style>
+    body {
+      background-image: url("soundmaster-background.jpg");
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header, footer {
+      background: rgba(0, 0, 0, 0.8);
+      text-align: center;
+      padding: 1em;
+      width: 100%;
+    }
+
+    nav {
+      margin-bottom: 2em;
+    }
+
+    nav a {
+      color: #fff;
+      margin: 0 1em;
+      text-decoration: none;
+      font-weight: bold;
+      background-color: #ff6f61;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    nav a:hover {
+      background-color: #ff4c39;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2em;
+      background: rgba(0, 0, 0, 0.7);
+      margin: 0 1em;
+      border-radius: 10px;
+    }
+
+    form {
+      margin: 2em 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input, button {
+      padding: 0.5em;
+      margin: 0.5em;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #ff6f61;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    button:hover {
+      background-color: #ff4c39;
+    }
+
+    #results, #uploadResult {
+      margin-top: 1em;
+      text-align: center;
+    }
+
+    audio {
+      margin: 2em 0;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    #progressBar {
+      width: 100%;
+      background-color: #444;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 1em;
+    }
+
+    #progressBar div {
+      height: 20px;
+      background-color: #00FF00;
+      width: 0%;
+      transition: width 0.5s;
+    }
+
+    .content-section {
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+
+      nav a {
+        margin: 0.5em 0;
+      }
+    }
+  </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soundmaster - Tzaneen's Own Beat</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 50px;
+            padding-bottom: 20px;
+        }
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Section -->
+        <section id="welcome" class="text-center">
+            <h1>Welcome to Soundmaster: Tzaneen's Own Beat</h1>
+            <p>Founded in 2022, Soundmaster is here to keep you connected with Tzaneen’s vibes, playing your favorite tunes without any charge. Join us in celebrating every beat of our community.</p>
+            <form id="signup-form">
+                <input type="email" class="form-control" placeholder="Your Email" required>
+                <input type="text" class="form-control" placeholder="Your Name" required>
+                <button type="submit" class="btn btn-primary mt-2">Join the Beat</button>
+            </form>
+        </section>
+
+        <!-- Discover Section -->
+        <section id="discover" class="text-center mt-4">
+            <h2>Discover the Sounds of Tzaneen</h2>
+            <p>Explore a rich collection of music that brings back good times, memories, and feelings. Our AI-driven search lets you find exactly what you want to hear.</p>
+            <input type="search" class="form-control" placeholder="Search music, artists, or albums" aria-label="Search through site content">
+            <button type="submit" class="btn btn-primary mt-2">Search</button>
+          </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="text-center mt-4">
+            <h2>Experience Limpopo Like Never Before</h2>
+            <p>As you tune into Soundmaster, let our curated playlists take you on an auditory journey through the heart of Limpopo.</p>
+            <div id="limpopoCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="h_about.gif" alt="Limpopo Landscape 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="img_welcome.jpg" alt="Limpopo Landscape 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="virtual_dj_logo.jpg" alt="Limpopo Landscape 3">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#limpopoCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#limpopoCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Your Music Section -->
+        <section id="your-music" class="text-center mt-4">
+            <h2>Your Music, Your Station</h2>
+            <p>Have a song you want to hear more often? Or a track to suggest? Soundmaster is your platform to shape the music we play.</p>
+            <form id="song-vote-form">
+                <input type="text" class="form-control" placeholder="Suggest or vote for a song" required>
+                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+            </form>
+        </section>
+
+        <!-- Join Us Section -->
+        <section id="join-us" class="text-center mt-4">
+            <h2>Join Us at the Heart of Tzaneen’s Entertainment</h2>
+            <p>Be part of our live events and broadcasts that celebrate the vibrant culture of our town. Check out our event calendar and don’t miss out!</p>
+            <div class="event-calendar">
+                <!-- Calendar elements -->
+            </div>
+        </section>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            // Handling form submissions, searching, and other interactions
+            $('#signup-form').submit(function(e){
+                e.preventDefault();
+                alert('Thank you for subscribing!');
+            });
+            $('#song-vote-form').submit(function(e){
+                e.preventDefault();
+                alert('Thank you for your suggestion!');
+            });
+        });
+    </script>
+</body>
+</html>

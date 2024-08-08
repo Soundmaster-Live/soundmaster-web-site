@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundmaster - Your Ultimate Online Radio Station</title>
+  <style>
+    body {
+      background-image: url('soundmaster-background.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header, footer {
+      background: rgba(0, 0, 0, 0.8);
+      text-align: center;
+      padding: 1em;
+      width: 100%;
+    }
+
+    nav {
+      margin-bottom: 2em;
+    }
+
+    nav a {
+      color: #fff;
+      margin: 0 1em;
+      text-decoration: none;
+      font-weight: bold;
+      background-color: #ff6f61;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    nav a:hover {
+      background-color: #ff4c39;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2em;
+      background: rgba(0, 0, 0, 0.7);
+      margin: 0 1em;
+      border-radius: 10px;
+    }
+
+    form {
+      margin: 2em 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input, button {
+      padding: 0.5em;
+      margin: 0.5em;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #ff6f61;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    button:hover {
+      background-color: #ff4c39;
+    }
+
+    #results, #uploadResult {
+      margin-top: 1em;
+      text-align: center;
+    }
+
+    audio {
+      margin: 2em 0;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    #progressBar {
+      width: 100%;
+      background-color: #444;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 1em;
+    }
+
+    #progressBar div {
+      height: 20px;
+      background-color: #00FF00;
+      width: 0%;
+      transition: width 0.5s;
+    }
+
+    .content-section {
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+
+      nav a {
+        margin: 0.5em 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Soundmaster</h1>
+    <nav>
+      <a href="https://www.facebook.com/profile.php?id=100091905356956">Facebook</a>
+      <a href="http://live.soundmaster.co.za:8000/Soundmasterlive">Live</a>
+      <a href="https://www.virtualdj.com/ask/Soundmaster">REQUEST SONG&nbsp;</a>
+      <a href="https://www.younow.com/Soundmaster">Younow&nbsp;</a>
+      <a href="https://kick.com/soundmasterlive">Kick</a>
+    </nav>
+  </header>
+  <main>
+    <div id="home" class="content-section active">
+      <h2>Welcome to Soundmaster</h2>
+    </div>
+    <div id="search" class="content-section">
+      <form id="searchForm">
+        <input type="text" id="query" placeholder="Search for a song" required>
+        <button type="submit">Search</button>
+      </form>
+      <div id="results"></div>
+    </div>
+    <form id="uploadForm" enctype="multipart/form-data">
+      <label for="songFile">Upload a song:</label>
+      <input type="file" id="songFile" name="songFile" accept="audio/*" required>
+      <button type="submit">Upload</button>
+      <div id="uploadResult"></div>
+    </form>
+    <audio id="audioPlayer" controls>
+      <source src="" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <div id="progressBar">
+      <div></div>
+    </div>
+  </main>
+  <footer>
+    <h3>
+      <a href="https://www.facebook.com/profile.php?id=100091905356956">Facebook</a> |
+      <a href="http://live.soundmaster.co.za:8000/Soundmasterlive">Live</a> |
+      <a href="https://www.virtualdj.com/ask/Soundmaster">REQUEST SONG&nbsp;</a> |
+      <a href="https://www.younow.com/Soundmaster">Younow&nbsp;</a> |
+      <a href="https://kick.com/soundmasterlive">Kick</a><br>
+      Copyright © Soundmaster | Soundmaster Productions
+    </h3>
+    <blockquote>
+      This site is for entertainment only and is a non profit private hobby&nbsp; &nbsp;
+    </blockquote>
+  </footer>
+  <script>
+    function showSection(id) {
+      const sections = document.querySelectorAll('.content-section');
+      sections.forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+
+    document.getElementById('searchForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const query = document.getElementById('query').value;
+      const response = await fetch('/stream?query=' + encodeURIComponent(query));
+      const data = await response.json();
+      document.getElementById('results').innerHTML = JSON.stringify(data.dbResults);
+      document.getElementById('query').value = ''; // Clear the search input
+    });
+
+    document.getElementById('uploadForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append('songFile', document.getElementById('songFile').files[0]);
+
+      const response = await fetch('/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+      document.getElementById('uploadResult').innerHTML = JSON.stringify(result);
+
+      if (result.success) {
+        const audioPlayer = document.getElementById('audioPlayer');
+        audioPlayer.src = '/songs/' + result.metadata.filename;
+        audioPlayer.play();
+      }
+
+      updateProgress(result.metadata.filename);
+    });
+
+    async function updateProgress(filename) {
+      const response = await fetch(`/progress/${filename}`);
+      const data = await response.json();
+      const progressBar = document.getElementById('progressBar').firstElementChild;
+      progressBar.style.width = data.progress + '%';
+    }
+  </script>
+</body>
+</html>
